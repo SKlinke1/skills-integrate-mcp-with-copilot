@@ -151,6 +151,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const result = await response.json();
 
       if (!response.ok) {
+        if (response.status === 401) {
+          isTeacher = false;
+          await refreshAuthState();
+          await fetchActivities();
+        }
         throw new Error(result.detail || "An error occurred");
       }
 
